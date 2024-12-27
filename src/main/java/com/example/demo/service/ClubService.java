@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.model.Club;
 import com.example.demo.repository.ClubRepository;
 import org.springframework.stereotype.Service;
 

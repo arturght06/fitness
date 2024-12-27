@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Event;
 import com.example.demo.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
