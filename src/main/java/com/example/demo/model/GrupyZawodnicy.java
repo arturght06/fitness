@@ -3,12 +3,16 @@ package com.example.demo.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-
+import jakarta.persistence.*;
 import java.time.Instant;
 
 @Entity
 @Table(name = "\"Grupy_Zawodnicy\"")
 public class GrupyZawodnicy {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column(name = "grupa_id", nullable = false)
     private Integer grupaId;
 

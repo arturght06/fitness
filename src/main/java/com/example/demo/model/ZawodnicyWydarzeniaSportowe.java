@@ -1,10 +1,13 @@
 package com.example.demo.model;
-
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "\"Zawodnicy_Wydarzenia_Sportowe\"")
 public class ZawodnicyWydarzeniaSportowe {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column(name = "zawodnik_id", nullable = false)
     private Integer zawodnikId;
 
