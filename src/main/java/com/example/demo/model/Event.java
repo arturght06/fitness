@@ -12,5 +12,27 @@ public class Event {
     private String title;
     private Date eventDate;
 
-    // Getters and setters
+    public Long getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public Date getEventDate() {
+        return eventDate;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setEventDate(Date eventDate) {
+        this.eventDate = eventDate;
+    }
 }
