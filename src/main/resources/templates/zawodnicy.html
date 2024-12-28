@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Zarządzanie Zawodnikami</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center">Zarządzaj Zawodnikami</h1>
+
+    <!-- Lista Zawodników -->
+    <div class="mt-4">
+        <h2>Lista Zawodników</h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Imię</th>
+                <th>Nazwisko</th>
+                <th>Telefon</th>
+                <th>Email</th>
+                <th>Opłata Subskrypcyjna</th>
+                <th>Akcje</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="athlete : ${athletes}">
+                <td th:text="${athlete.id}"></td>
+                <td th:text="${athlete.imie}"></td>
+                <td th:text="${athlete.nazwisko}"></td>
+                <td th:text="${athlete.numerTelefonu}"></td>
+                <td th:text="${athlete.email}"></td>
+                <td th:text="${athlete.oplataSubskrypcyjna}"></td>
+                <td>
+                    <button class="btn btn-primary btn-sm" onclick="populateForm(this)">Edytuj</button>
+                    <a th:href="@{/zawodnicy/delete/{id}(id=${athlete.id})}" class="btn btn-danger btn-sm">Usuń</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Formularz Dodawania/Edycji -->
+    <div class="mt-5">
+        <h2 id="formTitle">Dodaj Zawodnika</h2>
+        <form th:action="@{/zawodnicy}" method="post" id="athleteForm">
+            <input type="hidden" name="id" id="athleteId" />
+            <div class="mb-3">
+                <label for="imie" class="form-label">Imię</label>
+                <input type="text" class="form-control" id="imie" name="imie" placeholder="Wpisz imię" required />
+            </div>
+            <div class="mb-3">
+                <label for="nazwisko" class="form-label">Nazwisko</label>
+                <input type="text" class="form-control" id="nazwisko" name="nazwisko" placeholder="Wpisz nazwisko" required />
+            </div>
+            <div class="mb-3">
+                <label for="numerTelefonu" class="form-label">Telefon</label>
+                <input type="tel" class="form-control" id="numerTelefonu" name="numerTelefonu" placeholder="Wpisz numer telefonu" required />
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Wpisz email" />
+            </div>
+            <div class="mb-3">
+                <label for="oplataSubskrypcyjna" class="form-label">Opłata Subskrypcyjna</label>
+                <input type="number" class="form-control" id="oplataSubskrypcyjna" name="oplataSubskrypcyjna" placeholder="Wpisz opłatę subskrypcyjną" />
+            </div>
+            <button type="submit" class="btn btn-success">Zapisz</button>
+            <button type="button" class="btn btn-secondary" onclick="resetForm()">Anuluj</button>
+        </form>
+    </div>
+</div>
+
+<script src="/js/zawodnicy.js"></script>
+</body>
+</html>
