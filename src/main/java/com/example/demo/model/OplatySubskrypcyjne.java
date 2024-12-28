@@ -6,7 +6,7 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "\"Opłaty_subskrypcyjne\"")
-public class OpłatySubskrypcyjne {
+public class OplatySubskrypcyjne {
     @Id
     @Column(name = "oplata_id", nullable = false)
     private Integer id;
