@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.demo.model.GrupyTerminyTreningow;
+import com.example.demo.model.GrupyTerminyTreningowId;
 import com.example.demo.repository.GrupyTerminyTreningowRepository;
 
 import java.util.List;
@@ -13,48 +14,51 @@ import java.util.List;
 public class GrupyTerminyTreningowController {
 
     @Autowired
-    private GrupyTerminyTreningowRepository repository;
+    private GrupyTerminyTreningowRepository grupyTerminyTreningowRepository;
 
     // GET all group training sessions
     @GetMapping
     public List<GrupyTerminyTreningow> getAllGroupTrainingSessions() {
-        return repository.findAll();
+        return grupyTerminyTreningowRepository.findAll();
     }
 
-    // GET one group training session by ID
+    // GET a single group training session by composite ID
     @GetMapping("/{grupaId}/{terminId}")
-    public ResponseEntity<GrupyTerminyTreningow> getGroupTrainingSessionById(@PathVariable Long grupaId, @PathVariable Long terminId) {
-        return repository.findById(new GrupyTerminyTreningowId(grupaId, terminId))
+    public ResponseEntity<GrupyTerminyTreningow> getGroupTrainingSessionById(@PathVariable Integer grupaId, @PathVariable Integer terminId) {
+        GrupyTerminyTreningowId id = new GrupyTerminyTreningowId(grupaId, terminId);
+        return grupyTerminyTreningowRepository.findById(id)
                 .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .orElse(ResponseEntity.notFound().build());
     }
 
     // POST a new group training session
     @PostMapping
-    public GrupyTerminyTreningow createGroupTrainingSession(@RequestBody GrupyTerminyTreningow newGroupTrainingSession) {
-        return repository.save(newGroupTrainingSession);
+    public GrupyTerminyTreningow createGroupTrainingSession(@RequestBody GrupyTerminyTreningow newSession) {
+        return grupyTerminyTreningowRepository.save(newSession);
     }
 
-    // PUT update a group training session
+    // PUT to update an existing group training session
     @PutMapping("/{grupaId}/{terminId}")
-    public ResponseEntity<GrupyTerminyTreningow> updateGroupTrainingSession(@PathVariable Long grupaId, @PathVariable Long terminId, @RequestBody GrupyTerminyTreningow updatedGroupTrainingSession) {
-        return repository.findById(new GrupyTerminyTreningowId(grupaId, terminId))
-                .map(existingGroupTrainingSession -> {
-                    existingGroupTrainingSession.setGrupa(updatedGroupTrainingSession.getGrupa());
-                    existingGroupTrainingSession.setTermin(updatedGroupTrainingSession.getTermin());
-                    return ResponseEntity.ok(repository.save(existingGroupTrainingSession));
+    public ResponseEntity<GrupyTerminyTreningow> updateGroupTrainingSession(@PathVariable Integer grupaId, @PathVariable Integer terminId, @RequestBody GrupyTerminyTreningow updatedSession) {
+        GrupyTerminyTreningowId id = new GrupyTerminyTreningowId(grupaId, terminId);
+        return grupyTerminyTreningowRepository.findById(id)
+                .map(existingSession -> {
+                    existingSession.setGrupa(updatedSession.getGrupa());
+                    existingSession.setTermin(updatedSession.getTermin());
+                    return ResponseEntity.ok(grupyTerminyTreningowRepository.save(existingSession));
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     // DELETE a group training session
     @DeleteMapping("/{grupaId}/{terminId}")
-    public ResponseEntity<?> deleteGroupTrainingSession(@PathVariable Long grupaId, @PathVariable Long terminId) {
-        return repository.findById(new GrupyTerminyTreningowId(grupaId, terminId))
-                .map(existingGroupTrainingSession -> {
-                    repository.delete(existingGroupTrainingSession);
+    public ResponseEntity<?> deleteGroupTrainingSession(@PathVariable Integer grupaId, @PathVariable Integer terminId) {
+        GrupyTerminyTreningowId id = new GrupyTerminyTreningowId(grupaId, terminId);
+        return grupyTerminyTreningowRepository.findById(id)
+                .map(session -> {
+                    grupyTerminyTreningowRepository.delete(session);
                     return ResponseEntity.ok().build();
                 })
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .orElse(ResponseEntity.notFound().build());
     }
 }

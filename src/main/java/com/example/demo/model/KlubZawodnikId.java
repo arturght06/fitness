@@ -10,11 +10,22 @@ import java.util.Objects;
 @Embeddable
 public class KlubZawodnikId implements Serializable {
     private static final long serialVersionUID = 5623475911150749158L;
+
     @Column(name = "zawodnik_id", nullable = false)
     private Integer zawodnikId;
 
     @Column(name = "klub_id", nullable = false)
     private Integer klubId;
+
+    // Default constructor needed by JPA
+    public KlubZawodnikId() {
+    }
+
+    // Constructor to initialize both IDs
+    public KlubZawodnikId(Integer zawodnikId, Integer klubId) {
+        this.zawodnikId = zawodnikId;
+        this.klubId = klubId;
+    }
 
     public Integer getZawodnikId() {
         return zawodnikId;
@@ -45,5 +56,4 @@ public class KlubZawodnikId implements Serializable {
     public int hashCode() {
         return Objects.hash(klubId, zawodnikId);
     }
-
 }

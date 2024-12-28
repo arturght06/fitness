@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.demo.model.Grupy;
+import com.example.demo.repository.GrupyRepository;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class GrupyController {
     public ResponseEntity<Grupy> getGroupById(@PathVariable Integer id) {
         return grupyRepository.findById(id)
                 .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .orElse(ResponseEntity.notFound().build());
     }
 
     // POST a new group
@@ -34,7 +35,7 @@ public class GrupyController {
         return grupyRepository.save(newGroup);
     }
 
-    // PUT update a group
+    // PUT update an existing group
     @PutMapping("/{id}")
     public ResponseEntity<Grupy> updateGroup(@PathVariable Integer id, @RequestBody Grupy updatedGroup) {
         return grupyRepository.findById(id)
@@ -57,6 +58,6 @@ public class GrupyController {
                     grupyRepository.delete(existingGroup);
                     return ResponseEntity.ok().build();
                 })
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .orElse(ResponseEntity.notFound().build());
     }
 }

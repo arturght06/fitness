@@ -16,6 +16,9 @@ public class GrupyTerminyTreningowId implements Serializable {
     @Column(name = "termin_id", nullable = false)
     private Integer terminId;
 
+    public GrupyTerminyTreningowId(Integer grupaId, Integer terminId) {
+    }
+
     public Integer getGrupaId() {
         return grupaId;
     }
