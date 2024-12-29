@@ -42,6 +42,7 @@ public class UserController {
                 .map(existingUser -> {
                     existingUser.setLogin(updatedUser.getLogin());
                     existingUser.setPasswordHash(updatedUser.getPasswordHash());
+                    existingUser.setRole(updatedUser.getRole());
                     return ResponseEntity.ok(userRepository.save(existingUser));
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
