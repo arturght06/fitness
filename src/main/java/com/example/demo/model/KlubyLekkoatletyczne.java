@@ -3,6 +3,7 @@ package com.example.demo.model;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.List;
 
 @Entity
 @Table(name = "\"Kluby_lekkoatletyczne\"")
@@ -11,7 +12,7 @@ public class KlubyLekkoatletyczne {
     @Column(name = "klub_id", nullable = false)
     private Integer id;
 
-    @Column(name = "nazwa", nullable = false, length = 20)
+    @Column(name = "nazwa", nullable = false, length = 30)
     private String nazwa;
 
     @Column(name = "data_zalozenia", nullable = false)
@@ -27,6 +28,9 @@ public class KlubyLekkoatletyczne {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "adres_id", nullable = false)
     private Adresy adres;
+
+    @OneToMany(mappedBy = "klub", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<WydarzeniaSportowe> wydarzeniaSportowe;
 
     public Integer getId() {
         return id;

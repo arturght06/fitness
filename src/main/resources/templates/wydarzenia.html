@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Klub Lekkoatletyczny</title>
+    <title>Wydarzenia Sportowe</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <link href="css/wydarzenia.css" rel="stylesheet">
 </head>
 <body>
 <!-- Navigation -->
@@ -20,13 +20,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Strona Główna</a>
+                    <a class="nav-link" href="/">Strona Główna</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/zawodnicy">Zawodnicy</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/wydarzenia">Wydarzenia Sportowe</a>
+                    <a class="nav-link active" href="/wydarzenia">Wydarzenia Sportowe</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/kluby">Kluby</a>
@@ -39,38 +39,21 @@
 <!-- Hero Section -->
 <header class="bg-primary text-white text-center py-5">
     <div class="container">
-        <h1 class="display-4">Witamy w Klubie Lekkoatletycznym</h1>
-        <p class="lead">Promujemy sport, zdrowy tryb życia i rywalizację na najwyższym poziomie!</p>
+        <h1 class="display-4">Wydarzenia Sportowe</h1>
+        <p class="lead">Poznaj wszystkie nadchodzące i przeszłe wydarzenia sportowe naszego klubu.</p>
     </div>
 </header>
 
-<!-- Main Content -->
+<!-- Events Section -->
 <main class="container mt-5">
     <section>
-        <h2 class="text-center mb-4">O Klubie</h2>
-        <p>
-            Klub Lekkoatletyczny to organizacja skupiająca najlepszych zawodników, trenerów oraz wydarzenia sportowe.
-            Wspieramy rozwój lekkoatletyki i promujemy aktywność fizyczną na każdym poziomie. Nasz zespół składa się z wykwalifikowanych
-            pracowników, którzy zapewniają najwyższy standard obsługi i profesjonalne podejście.
-        </p>
-    </section>
+        <h2 class="text-center mb-4">Lista Wydarzeń</h2>
+        <div id="events-container" class="row gy-4"></div>
 
-    <section class="mt-5">
-        <h2 class="text-center mb-4">Najważniejsze Statystyki</h2>
-        <div class="row text-center">
-            <div class="col-md-4">
-                <h3 class="display-4">150+</h3>
-                <p>Zawodników</p>
-            </div>
-            <div class="col-md-4">
-                <h3 class="display-4">20</h3>
-                <p>Trenerów</p>
-            </div>
-            <div class="col-md-4">
-                <h3 class="display-4">50+</h3>
-                <p>Wydarzeń Sportowych</p>
-            </div>
-        </div>
+        <!-- Pagination Controls -->
+        <nav aria-label="Pagination" class="mt-4">
+            <ul id="pagination-container" class="pagination justify-content-center"></ul>
+        </nav>
     </section>
 </main>
 
@@ -81,5 +64,7 @@
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Custom JS -->
+<script src="/js/wydarzenia.js"></script>
 </body>
 </html>

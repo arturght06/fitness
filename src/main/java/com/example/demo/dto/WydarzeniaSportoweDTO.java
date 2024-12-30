@@ -1,31 +1,15 @@
-package com.example.demo.model;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
+package com.example.demo.dto;
 
 import java.time.Instant;
 
-@Entity
-@Table(name = "\"Wydarzenia_sportowe\"")
-public class WydarzeniaSportowe {
-    @Id
-    @Column(name = "wydarzenie_id", nullable = false)
+public class WydarzeniaSportoweDTO {
     private Integer id;
-
-    @Column(name = "data", nullable = false)
     private Instant data;
-
-    @Column(name = "nazwa", nullable = false, length = 20)
     private String nazwa;
-
-    @Column(name = "typ_sportu", nullable = false, length = 15)
     private String typSportu;
+    private KlubyLekkoatletyczneDTO klub; // Include the club DTO instead of the entity
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "klub_id", nullable = false)
-    @JsonManagedReference
-    private KlubyLekkoatletyczne klub;
-
+    // Getters and setters
     public Integer getId() {
         return id;
     }
@@ -58,12 +42,11 @@ public class WydarzeniaSportowe {
         this.typSportu = typSportu;
     }
 
-    public KlubyLekkoatletyczne getKlub() {
+    public KlubyLekkoatletyczneDTO getKlub() {
         return klub;
     }
 
-    public void setKlub(KlubyLekkoatletyczne klub) {
+    public void setKlub(KlubyLekkoatletyczneDTO klub) {
         this.klub = klub;
     }
-
 }

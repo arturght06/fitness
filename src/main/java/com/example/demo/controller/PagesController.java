@@ -21,4 +21,9 @@ public class PagesController {
         return "register";
     }
 
+    @GetMapping("/wydarzenia")
+    public String wydarzenia() {
+        return "wydarzenia"; // Ensure there's a 'wydarzenia.html' template in your templates directory
+    }
+
 }

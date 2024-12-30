@@ -32,7 +32,7 @@ public class SecurityConfig {
 
                 // Настраиваем доступ к страницам
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/", "/login", "/perform_login", "/resources/**").permitAll() // Доступ ко всем этим URL
+                        .requestMatchers("/", "/login", "/perform_login", "/resources/**", "/wydarzenia/**", "/css/**", "/js/**", "/images/**", "/api/wydarzeniaSportowe/**").permitAll() // Доступ ко всем этим URL
                         .anyRequest().authenticated()) // Остальное требует авторизации
 
                 // Настраиваем стандартный login page
