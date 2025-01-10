@@ -38,7 +38,7 @@ public class SecurityConfig {
                 // Настраиваем стандартный login page
                 .formLogin(form -> form
                         .loginPage("/login") // Указываем кастомный URL для логина
-                        .loginProcessingUrl("/perform_login") // Обрабатываем логин на этом URL
+//                        .loginProcessingUrl("/perform_login") // Обрабатываем логин на этом URL
                         .defaultSuccessUrl("/home", true) // Перенаправляем на домашнюю страницу после успешного входа
                         .failureUrl("/login?error=true") // Если ошибка логина
                         .permitAll()) // Разрешаем всем доступ к странице логина
