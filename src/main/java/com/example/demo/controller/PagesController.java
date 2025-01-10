@@ -16,11 +16,6 @@ public class PagesController {
         return "login"; // Вернет login.html из папки templates
     }
 
-    @GetMapping("/register")
-    public String showRegistrationForm() {
-        return "register";
-    }
-
     @GetMapping("/wydarzenia")
     public String wydarzenia() {
         return "wydarzenia"; // Ensure there's a 'wydarzenia.html' template in your templates directory

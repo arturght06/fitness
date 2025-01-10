@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Role Upgrade Requests</title>
+</head>
+<body>
+<h1>Role Upgrade Requests</h1>
+<table>
+  <tr>
+    <th>User</th>
+    <th>Requested Role</th>
+    <th>Status</th>
+    <th>Actions</th>
+  </tr>
+  <tr th:each="request : ${requests}">
+    <td th:text="${request.user.login}"></td>
+    <td th:text="${request.requestedRole}"></td>
+    <td th:text="${request.status}"></td>
+    <td>
+      <form th:action="@{/admin/role-requests/{id}/approve(id=${request.id})}" method="post">
+        <button type="submit">Approve</button>
+      </form>
+      <form th:action="@{/admin/role-requests/{id}/decline(id=${request.id})}" method="post">
+        <button type="submit">Decline</button>
+      </form>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
