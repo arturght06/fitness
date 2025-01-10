@@ -10,10 +10,18 @@ class LoginController {
     String performLogin(@RequestParam("username") String username, @RequestParam("password") String password, Model model) {
         System.out.println(username);
         System.out.println(password);
-        if (!"skibidi".equals(username) || !"password123".equals(password)) {
+//        if (!"skibidi".equals(username) || !"password123".equals(password)) {
+//            model.addAttribute("error", "Invalid username or password.");
+//            return "login"; // Возвращаем обратно на страницу логина с ошибкой
+//        }
+        if (username.equals("a")) {
             model.addAttribute("error", "Invalid username or password.");
-            return "login"; // Возвращаем обратно на страницу логина с ошибкой
         }
         return "login";
     }
+
+//    @GetMapping("/login")
+//    String showLoginPage() {
+//        return "login"; // Возвращаем страницу логина для GET-запроса
+//    }
 }
