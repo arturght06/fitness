@@ -11,31 +11,7 @@
 </head>
 <body>
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Klub Lekkoatletyczny</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Strona Główna</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/zawodnicy">Zawodnicy</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/wydarzenia">Wydarzenia Sportowe</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/kluby">Kluby</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
+<header th:replace="fragments/navbar :: navbar"></header>
 <!-- Hero Section -->
 <header class="bg-primary text-white text-center py-5">
     <div class="container">
