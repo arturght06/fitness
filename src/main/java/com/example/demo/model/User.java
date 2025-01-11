@@ -10,7 +10,7 @@ public class User {
     @Column(name = "user_id", nullable = false)
     private Integer userId;
 
-    @Column(name = "login", nullable = false, length = 30)
+    @Column(name = "login", nullable = false, length = 30, unique = true)
     private String login;
 
     @Column(name = "password_hash", nullable = false, length = 64)
