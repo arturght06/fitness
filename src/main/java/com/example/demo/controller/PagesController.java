@@ -26,4 +26,18 @@ public class PagesController {
         return "wydarzenia"; // Ensure there's a 'wydarzenia.html' template in your templates directory
     }
 
+    @GetMapping("/admin")
+    public String admin() {
+        return "admin"; // Ensure there's a 'wydarzenia.html' template in your templates directory
+    }
+
+    @GetMapping("/user")
+    public String user() {
+        return "user"; // Ensure there's a 'wydarzenia.html' template in your templates directory
+    }
+
+    @GetMapping("/zawodnik")
+    public String zawodnik() {
+        return "zawodnik"; // Ensure there's a 'wydarzenia.html' template in your templates directory
+    }
 }
