@@ -2,19 +2,63 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            width: 300px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        p {
+            text-align: center;
+            color: red;
+        }
+        p.success {
+            color: green;
+        }
+    </style>
 </head>
 <body>
 <h1>Login</h1>
 <form id="login-form" method="POST" th:action="@{/perform_login}">
-    <label for="username">Username:</label>
-    <input id="username" name="username" type="text" autocomplete="username" required />
-    <br>
-    <label for="password">Password:</label>
-    <input id="password" name="password" type="password" autocomplete="current-password" required />
-    <br>
+    <fieldset>
+        <legend>Login Credentials</legend>
+        <label for="username">Username:</label>
+        <input id="username" name="username" type="text" autocomplete="username" required />
+
+        <label for="password">Password:</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required />
+    </fieldset>
     <button type="submit">Log in</button>
 </form>
+
+<!-- Error or success messages -->
 <p th:if="${param.error}">Invalid username or password.</p>
-<p th:if="${error}" th:text="${error}"></p>
+<p th:if="${param.logout}" class="success">You have been logged out successfully.</p>
 </body>
 </html>

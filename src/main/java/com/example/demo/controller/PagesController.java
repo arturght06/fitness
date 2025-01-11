@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class PagesController {
 
-    @GetMapping("/") // Mapowanie na stronę główną
+    @GetMapping({"/", "/home"}) // Mapowanie na stronę główną
     public String home() {
         return "home"; // Odwołuje się do pliku home.html w folderze templates
     }
@@ -14,6 +14,11 @@ public class PagesController {
     @GetMapping("/login")
     public String loginPage() {
         return "login"; // Вернет login.html из папки templates
+    }
+
+    @GetMapping("/kluby")
+    public String klubyPage() {
+        return "kluby"; // Вернет login.html из папки templates
     }
 
     @GetMapping("/wydarzenia")

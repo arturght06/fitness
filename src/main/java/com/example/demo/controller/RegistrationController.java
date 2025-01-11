@@ -34,7 +34,7 @@ public class RegistrationController {
         User newUser = new User();
         newUser.setLogin(username);
         newUser.setPasswordHash(passwordEncoder.encode(password));
-        newUser.setRole("ROLE_USER"); // Default role assigned
+        newUser.setRole("USER"); // Save without "ROLE_" prefix
 
         userRepository.save(newUser);
 

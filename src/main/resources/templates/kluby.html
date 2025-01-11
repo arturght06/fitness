@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kluby</title>
+    <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+    <h1>Welcome to Kluby</h1>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="/" th:href="@{/}">Home</a></li>
+        <li><a href="/kluby" th:href="@{/kluby}">Kluby</a></li>
+        <li><a href="/logout" th:href="@{/logout}">Logout</a></li>
+    </ul>
+</nav>
+
+<main>
+    <h2>Kluby Page</h2>
+    <p>Here you can manage and view all the clubs.</p>
+
+    <!-- Example Table -->
+    <table>
+        <thead>
+        <tr>
+            <th>Club Name</th>
+            <th>Location</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Example row -->
+        <tr>
+            <td>Sample Club</td>
+            <td>Sample Location</td>
+            <td>
+                <button>Edit</button>
+                <button>Delete</button>
+            </td>
+        </tr>
+        <!-- Add more rows dynamically -->
+        </tbody>
+    </table>
+</main>
+
+<footer>
+    <p>&copy; 2025 Your Application Name</p>
+</footer>
+</body>
+</html>

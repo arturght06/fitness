@@ -2,13 +2,13 @@ package com.example.demo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
@@ -32,13 +32,13 @@ public class SecurityConfig {
 
                 // Настраиваем доступ к страницам
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/", "/login", "/register", "/perform_login", "/resources/**", "/wydarzenia/**", "/css/**", "/js/**", "/images/**", "/api/wydarzeniaSportowe/**").permitAll() // Доступ ко всем этим URL
+                        .requestMatchers("/", "/login/**", "/register/**", "/perform_login/**", "/resources/**", "/wydarzenia/**", "/error", "/css/**", "/js/**", "/images/**", "/api/wydarzeniaSportowe/**").permitAll() // Доступ ко всем этим URL
                         .anyRequest().authenticated()) // Остальное требует авторизации
 
                 // Настраиваем стандартный login page
                 .formLogin(form -> form
                         .loginPage("/login") // Указываем кастомный URL для логина
-//                        .loginProcessingUrl("/perform_login") // Обрабатываем логин на этом URL
+                        .loginProcessingUrl("/perform_login") // Обрабатываем логин на этом URL
                         .defaultSuccessUrl("/home", true) // Перенаправляем на домашнюю страницу после успешного входа
                         .failureUrl("/login?error=true") // Если ошибка логина
                         .permitAll()) // Разрешаем всем доступ к странице логина
