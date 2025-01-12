@@ -28,10 +28,14 @@
           <li class="nav-item">
             <a class="nav-link" th:href="@{/kluby}">Kluby</a>
           </li>
+          <!-- Admin-Specific Link -->
+          <li class="nav-item" th:if="${currentUser.authorities.contains('ROLE_ADMIN')}">
+            <a class="nav-link" th:href="@{/admin/role-requests}">Role Requests</a>
+          </li>
         </ul>
         <ul class="navbar-nav ms-auto">
           <!-- Authenticated User -->
-          <li class="nav-item dropdown" th:if="${currentUser.principal != 'anonymousUser'}">
+          <li class="nav-item dropdown" th:if="${currentUser != null and currentUser.principal != 'anonymousUser'}">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <span th:text="${currentUser.name}">User</span> <!-- Display user's name -->
             </a>
