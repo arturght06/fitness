@@ -31,9 +31,9 @@
         </ul>
         <ul class="navbar-nav ms-auto">
           <!-- Authenticated User -->
-          <li class="nav-item dropdown" th:if="${#authentication != null and #authentication.principal != null}">
+          <li class="nav-item dropdown" th:if="${currentUser.principal != 'anonymousUser'}">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <span th:text="${#authentication.name}">User</span> <!-- Display user's name -->
+              <span th:text="${currentUser.name}">User</span> <!-- Display user's name -->
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" th:href="@{/profile}">Profile</a></li>
@@ -42,7 +42,7 @@
             </ul>
           </li>
           <!-- Unauthenticated User -->
-          <li class="nav-item" th:if="${#authentication == null or #authentication.principal == null}">
+          <li class="nav-item" th:if="${currentUser == null or currentUser.principal == 'anonymousUser'}">
             <a class="btn btn-outline-light" th:href="@{/login}" role="button">Login / Register</a>
           </li>
         </ul>
