@@ -1,48 +1,51 @@
 package com.example.demo.controller;
 
+import com.example.demo.repository.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class PagesController {
 
-    @GetMapping({"/", "/home"}) // Mapowanie na stronę główną
+    private final UserRepository userRepository;
+
+    public PagesController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @GetMapping({"/", "/home"}) // Mapping for the homepage
     public String home() {
-        return "home"; // Odwołuje się do pliku home.html w folderze templates
+        return "home"; // Refers to home.html in the templates folder
     }
 
     @GetMapping("/login")
     public String loginPage() {
-        return "login"; // Вернет login.html из папки templates
+        return "login"; // Refers to login.html in the templates folder
     }
 
     @GetMapping("/kluby")
     public String klubyPage() {
-        return "kluby"; // Вернет login.html из папки templates
+        return "kluby"; // Refers to kluby.html in the templates folder
     }
 
     @GetMapping("/wydarzenia")
     public String wydarzenia() {
-        return "wydarzenia"; // Ensure there's a 'wydarzenia.html' template in your templates directory
+        return "wydarzenia"; // Refers to wydarzenia.html in the templates folder
     }
 
-    @GetMapping("/admin/profile")
-    public String adminProfile() {
-        return "admin/profile";
-    }
-
-    @GetMapping("/user/profile")
-    public String userProfile() {
-        return "user/profile";
-    }
-
-    @GetMapping("/zawodnik/profile")
-    public String zawodnikProfile() {
-        return "zawodnik/profile";
-    }
-
-    @GetMapping("/pracownik/profile")
-    public String pracownikProfile() {
-        return "pracownik/profile";
-    }
+//    @GetMapping("/profile")
+//    public String getProfile(Authentication authentication, Model model) {
+//        String username = authentication.getName(); // Fetch logged-in user's username
+//        var user = userRepository.findByLogin(username)
+//                .orElseThrow(() -> new IllegalStateException("User not found"));
+//
+//        // Map user entity to DTO (if required)
+//        UserDTO userDTO = new UserDTO();
+//        userDTO.setUserId(user.getUserId());
+//        userDTO.setLogin(user.getLogin());
+//        userDTO.setRole(user.getRole());
+//
+//        model.addAttribute("user", userDTO);
+//        return "profile"; // Refers to profile.html in the templates folder
+//    }
 }

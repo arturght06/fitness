@@ -3,64 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Klub Lekkoatletyczny - Wybór</title>
+    <title>Profile</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            min-height: 100vh;
+            background-color: #f8f9fa;
+        }
+        .card {
+            min-height: 70vh; /* Ensures the card takes up 70% of the viewport height */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+    </style>
 </head>
 <body>
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Klub Lekkoatletyczny</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/static">Strona Główna</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/zawodnicy">Zawodnicy</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/wydarzenia">Wydarzenia Sportowe</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/kluby">Kluby</a>
-                </li>
-            </ul>
+<!-- Include Navbar Fragment -->
+<header th:replace="fragments/navbar :: navbar"></header>
+
+<!-- Profile Container -->
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white text-center">
+            <h2>User Profile</h2>
+        </div>
+        <div class="card-body">
+            <div class="mb-4">
+                <p><strong>Username:</strong> <span th:text="${user.login}"></span></p>
+                <p><strong>Role:</strong> <span class="badge bg-info text-dark" th:text="${user.role}"></span></p>
+            </div>
+
+            <!-- Display success or error messages -->
+            <div th:if="${param.success}" class="alert alert-success" role="alert">
+                Role upgrade request submitted successfully!
+            </div>
+            <div th:if="${param.error}" class="alert alert-danger" role="alert">
+                You already have a pending role upgrade request.
+            </div>
+
+            <!-- Upgrade Role Form -->
+            <div th:if="${user.role != 'ADMIN'}" class="mt-4">
+                <form th:action="@{/upgrade-role}" method="post" class="needs-validation" novalidate>
+                    <div class="mb-3">
+                        <label for="role" class="form-label">Request Role Upgrade:</label>
+                        <select id="role" name="newRole" class="form-select" required>
+                            <option value="" disabled selected>Select a role...</option>
+                            <option value="ZAWODNIK">Zawodnik Klubu</option>
+                            <option value="TRENER">Trener</option>
+                            <option value="PRACOWNIK">Pracownik Biura</option>
+                            <option value="ADMIN">Admin</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select a role.
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Submit Request</button>
+                </form>
+            </div>
+        </div>
+        <div class="card-footer text-center">
+            <p class="text-muted">&copy; 2024 Klub Lekkoatletyczny. All rights reserved.</p>
         </div>
     </div>
-</nav>
-
-<!-- Main Content -->
-<main class="container mt-5">
-    <section class="text-center">
-        <h2 class="mb-4">Wybierz opcję i wyślij запрос</h2>
-        <form action="/api/endpoint" method="POST" class="d-inline-block">
-            <div class="mb-3">
-                <label for="optionSelect" class="form-label">Wybierz opcję</label>
-                <select class="form-select" id="optionSelect" name="selectedOption" required>
-                    <option value="" disabled selected>Wybierz...</option>
-                    <option value="option1">Opcja 1</option>
-                    <option value="option2">Opcja 2</option>
-                    <option value="option3">Opcja 3</option>
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Wyślij</button>
-        </form>
-    </section>
-</main>
-
-<!-- Footer -->
-<footer class="bg-dark text-white text-center py-3 mt-5">
-    <p>&copy; 2024 Klub Lekkoatletyczny. Wszelkie prawa zastrzeżone.</p>
-</footer>
+</div>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Enable Bootstrap form validation
+    (function () {
+        'use strict';
+        var forms = document.querySelectorAll('.needs-validation');
+        Array.prototype.slice.call(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    })();
+</script>
 </body>
 </html>
