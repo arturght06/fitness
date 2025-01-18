@@ -19,7 +19,7 @@
           <li class="nav-item">
             <a class="nav-link active" th:href="@{/}">Strona Główna</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" th:if="${currentUser != null and currentUser.principal != 'anonymousUser' and !currentUser.authorities.contains('PRACOWNIK')}">
             <a class="nav-link" th:href="@{/zawodnicy}">Zawodnicy</a>
           </li>
           <li class="nav-item">
@@ -29,8 +29,12 @@
             <a class="nav-link" th:href="@{/kluby}">Kluby</a>
           </li>
           <!-- Admin-Specific Link -->
-          <li class="nav-item" th:if="${currentUser.authorities.contains('ROLE_ADMIN')}">
+          <li class="nav-item" th:if="${currentUser.authorities.contains('ADMIN')}">
             <a class="nav-link" th:href="@{/admin/role-requests}">Role Requests</a>
+          </li>
+          <!-- User-Specific Link -->
+          <li class="nav-item" th:if="${currentUser.authorities.contains('USER')}">
+            <a class="nav-link" th:href="@{/user/update-role}">Update Role</a>
           </li>
         </ul>
         <ul class="navbar-nav ms-auto">

@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "\"Grupy\"")
@@ -24,7 +25,10 @@ public class Grupy {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pracownik_id")
-    private Trenerzy pracownik;
+    private Trenerzy trener;
+
+    @OneToMany(mappedBy = "grupa", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<GrupyZawodnicy> grupyZawodnicy;
 
     public Integer getId() {
         return id;
@@ -66,12 +70,19 @@ public class Grupy {
         this.klub = klub;
     }
 
-    public Trenerzy getPracownik() {
-        return pracownik;
+    public Trenerzy getTrener() {
+        return trener;
     }
 
-    public void setPracownik(Trenerzy pracownik) {
-        this.pracownik = pracownik;
+    public void setTrener(Trenerzy trener) {
+        this.trener = trener;
     }
 
+    public List<GrupyZawodnicy> getGrupyZawodnicy() {
+        return grupyZawodnicy;
+    }
+
+    public void setGrupyZawodnicy(List<GrupyZawodnicy> grupyZawodnicy) {
+        this.grupyZawodnicy = grupyZawodnicy;
+    }
 }

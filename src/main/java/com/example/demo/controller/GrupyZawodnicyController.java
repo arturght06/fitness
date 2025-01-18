@@ -40,14 +40,19 @@ public class GrupyZawodnicyController {
     public ResponseEntity<GrupyZawodnicy> updateEntry(@PathVariable Long id, @RequestBody GrupyZawodnicy updatedEntry) {
         return grupyZawodnicyRepository.findById(id)
                 .map(existingEntry -> {
-                    existingEntry.setGrupaId(updatedEntry.getGrupaId());
-                    existingEntry.setZawodnikId(updatedEntry.getZawodnikId());
+                    // Update relationships
+                    existingEntry.setGrupa(updatedEntry.getGrupa());
+                    existingEntry.setZawodnik(updatedEntry.getZawodnik());
+
+                    // Update other fields
                     existingEntry.setDataPrzypisania(updatedEntry.getDataPrzypisania());
                     existingEntry.setDataWypisania(updatedEntry.getDataWypisania());
+
                     return ResponseEntity.ok(grupyZawodnicyRepository.save(existingEntry));
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
 
     // DELETE an entry
     @DeleteMapping("/{id}")

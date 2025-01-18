@@ -1,9 +1,6 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.Instant;
 
@@ -13,6 +10,10 @@ public class Zarzadzcy {
     @Id
     @Column(name = "zarzadzca_id", nullable = false)
     private Integer id;
+
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
+    private User user;
 
     @Column(name = "imie", nullable = false, length = 30)
     private String imie;
@@ -77,4 +78,11 @@ public class Zarzadzcy {
         this.dataPrzypisania = dataPrzypisania;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

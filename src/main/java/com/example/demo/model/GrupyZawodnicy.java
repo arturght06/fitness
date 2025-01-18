@@ -1,23 +1,23 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import jakarta.persistence.*;
 import java.time.Instant;
 
 @Entity
 @Table(name = "\"Grupy_Zawodnicy\"")
 public class GrupyZawodnicy {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "grupa_id", nullable = false)
-    private Integer grupaId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "grupa_id", referencedColumnName = "grupa_id", nullable = false)
+    private Grupy grupa;
 
-    @Column(name = "zawodnik_id", nullable = false)
-    private Integer zawodnikId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "zawodnik_id", referencedColumnName = "zawodnik_id", nullable = false)
+    private Zawodnicy zawodnik;
 
     @Column(name = "data_przypisania", nullable = false)
     private Instant dataPrzypisania;
@@ -25,20 +25,29 @@ public class GrupyZawodnicy {
     @Column(name = "data_wypisania")
     private Instant dataWypisania;
 
-    public Integer getGrupaId() {
-        return grupaId;
+    // Getters and Setters
+    public Long getId() {
+        return id;
     }
 
-    public void setGrupaId(Integer grupaId) {
-        this.grupaId = grupaId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public Integer getZawodnikId() {
-        return zawodnikId;
+    public Grupy getGrupa() {
+        return grupa;
     }
 
-    public void setZawodnikId(Integer zawodnikId) {
-        this.zawodnikId = zawodnikId;
+    public void setGrupa(Grupy grupa) {
+        this.grupa = grupa;
+    }
+
+    public Zawodnicy getZawodnik() {
+        return zawodnik;
+    }
+
+    public void setZawodnik(Zawodnicy zawodnik) {
+        this.zawodnik = zawodnik;
     }
 
     public Instant getDataPrzypisania() {
@@ -56,5 +65,4 @@ public class GrupyZawodnicy {
     public void setDataWypisania(Instant dataWypisania) {
         this.dataWypisania = dataWypisania;
     }
-
 }

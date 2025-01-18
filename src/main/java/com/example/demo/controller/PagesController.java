@@ -33,19 +33,10 @@ public class PagesController {
         return "wydarzenia"; // Refers to wydarzenia.html in the templates folder
     }
 
-//    @GetMapping("/profile")
-//    public String getProfile(Authentication authentication, Model model) {
-//        String username = authentication.getName(); // Fetch logged-in user's username
-//        var user = userRepository.findByLogin(username)
-//                .orElseThrow(() -> new IllegalStateException("User not found"));
-//
-//        // Map user entity to DTO (if required)
-//        UserDTO userDTO = new UserDTO();
-//        userDTO.setUserId(user.getUserId());
-//        userDTO.setLogin(user.getLogin());
-//        userDTO.setRole(user.getRole());
-//
-//        model.addAttribute("user", userDTO);
-//        return "profile"; // Refers to profile.html in the templates folder
-//    }
+    @GetMapping("/zawodnicy")
+    public String zawodnicyPage() {
+        return "zawodnicy"; // Refers to zawodnicy.html in the templates folder
+    }
+
+    // Additional methods can go here
 }

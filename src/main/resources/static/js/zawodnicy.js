@@ -1,24 +1,61 @@
-// Populate form for editing
-function populateForm(button) {
-    const row = button.closest("tr");
-    document.getElementById("formTitle").innerText = "Edit Athlete";
-    document.getElementById("athleteId").value = row.children[0].innerText.trim();
-    document.getElementById("imie").value = row.children[1].innerText.trim();
-    document.getElementById("nazwisko").value = row.children[2].innerText.trim();
-    document.getElementById("numerTelefonu").value = row.children[3].innerText.trim();
-    document.getElementById("email").value = row.children[4].innerText.trim();
-    document.getElementById("oplataSubskrypcyjna").value = row.children[5].innerText.trim();
-    document.getElementById("athleteForm").action = `/zawodnicy/update/${row.children[0].innerText.trim()}`;
+document.addEventListener('DOMContentLoaded', () => {
+    fetchGroups();
+});
+
+function fetchGroups() {
+    fetch('/api/zawodnicy/groups?page=0&size=10')
+        .then(response => response.json())
+        .then(data => renderGroups(data.content))
+        .catch(error => console.error('Error fetching groups:', error));
 }
 
-// Reset form for adding a new athlete
-function resetForm() {
-    document.getElementById("formTitle").innerText = "Add Athlete";
-    document.getElementById("athleteId").value = "";
-    document.getElementById("imie").value = "";
-    document.getElementById("nazwisko").value = "";
-    document.getElementById("numerTelefonu").value = "";
-    document.getElementById("email").value = "";
-    document.getElementById("oplataSubskrypcyjna").value = "";
-    document.getElementById("athleteForm").action = "/zawodnicy/add";
+function renderGroups(groups) {
+    const tableBody = document.getElementById('groups-table-body');
+    tableBody.innerHTML = '';
+
+    groups.forEach(group => {
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+            <td>${group.name}</td>
+            <td>
+                <button class="btn btn-primary btn-sm" onclick="fetchGroupDetails(${group.id})">Szczegóły</button>
+            </td>
+        `;
+
+        tableBody.appendChild(row);
+    });
+}
+
+function fetchGroupDetails(groupId) {
+    fetch(`/api/zawodnicy/groups/${groupId}`)
+        .then(response => response.json())
+        .then(data => renderGroupDetails(data))
+        .catch(error => console.error('Error fetching group details:', error));
+}
+
+function renderGroupDetails(group) {
+    document.getElementById('group-details').style.display = 'block';
+    document.getElementById('group-name').textContent = `Szczegóły Grupy: ${group.groupName}`;
+
+    const participantsList = document.getElementById('participants-list');
+    participantsList.innerHTML = '';
+
+    group.participants.forEach(participant => {
+        const listItem = document.createElement('li');
+        listItem.className = 'list-group-item';
+
+        if (participant.highlighted) {
+            listItem.style.backgroundColor = 'lightblue';
+        }
+
+        listItem.textContent = `${participant.name} (${participant.role})`;
+
+        participantsList.appendChild(listItem);
+    });
+}
+
+function goBackToGroups() {
+    document.getElementById('group-details').style.display = 'none';
+    fetchGroups();
 }

@@ -1,9 +1,6 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -32,6 +29,12 @@ public class Zawodnicy {
 
     @Column(name = "oplata_subskrypcyjna", precision = 10, scale = 2)
     private BigDecimal oplataSubskrypcyjna;
+
+    // Add One-to-One relationship with User
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
+    private User user;
+
 
     public Integer getId() {
         return id;
@@ -87,6 +90,14 @@ public class Zawodnicy {
 
     public void setOplataSubskrypcyjna(BigDecimal oplataSubskrypcyjna) {
         this.oplataSubskrypcyjna = oplataSubskrypcyjna;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }

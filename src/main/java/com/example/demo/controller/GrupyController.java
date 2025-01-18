@@ -44,7 +44,7 @@ public class GrupyController {
                     existingGroup.setTypSportu(updatedGroup.getTypSportu());
                     existingGroup.setOpis(updatedGroup.getOpis());
                     existingGroup.setKlub(updatedGroup.getKlub());
-                    existingGroup.setPracownik(updatedGroup.getPracownik());
+                    existingGroup.setTrener(updatedGroup.getTrener());
                     return ResponseEntity.ok(grupyRepository.save(existingGroup));
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());

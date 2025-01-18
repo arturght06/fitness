@@ -1,64 +1,126 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Grupy;
+import com.example.demo.model.GrupyZawodnicy;
 import com.example.demo.model.Zawodnicy;
+import com.example.demo.repository.GrupyRepository;
+import com.example.demo.repository.GrupyZawodnicyRepository;
 import com.example.demo.repository.ZawodnicyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/zawodnicy")
 public class ZawodnicyController {
 
     @Autowired
+    private GrupyRepository grupyRepository;
+
+    @Autowired
+    private GrupyZawodnicyRepository grupyZawodnicyRepository;
+
+    @Autowired
     private ZawodnicyRepository zawodnicyRepository;
 
-    // GET all athletes
-    @GetMapping
-    public List<Zawodnicy> getAllAthletes() {
-        return zawodnicyRepository.findAll();
+    // Get all groups
+    @GetMapping("/groups")
+    public ResponseEntity<List<Grupy>> getAllGroups() {
+        return ResponseEntity.ok(grupyRepository.findAll());
     }
 
-    // GET one athlete by ID
-    @GetMapping("/{id}")
-    public ResponseEntity<Zawodnicy> getAthleteById(@PathVariable Integer id) {
-        return zawodnicyRepository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
+    // Get details of a specific group
+    @GetMapping("/groups/{groupId}")
+    public ResponseEntity<?> getGroupDetails(@PathVariable Integer groupId) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
-    // POST a new athlete
-    @PostMapping
-    public Zawodnicy createAthlete(@RequestBody Zawodnicy newAthlete) {
-        return zawodnicyRepository.save(newAthlete);
-    }
+        return grupyRepository.findById(groupId)
+                .map(group -> {
+                    List<GrupyZawodnicy> participants = grupyZawodnicyRepository.findByGrupaId((long) group.getId());
+                    List<ParticipantResponse> participantResponses = participants.stream().map(gz -> {
+                        Zawodnicy zawodnik = gz.getZawodnik();
+                        return new ParticipantResponse(
+                                zawodnik.getImie() + " " + zawodnik.getNazwisko(),
+                                gz.getDataPrzypisania()
+                        );
+                    }).collect(Collectors.toList());
 
-    // PUT to update an existing athlete
-    @PutMapping("/{id}")
-    public ResponseEntity<Zawodnicy> updateAthlete(@PathVariable Integer id, @RequestBody Zawodnicy updatedAthlete) {
-        return zawodnicyRepository.findById(id)
-                .map(existingAthlete -> {
-                    existingAthlete.setImie(updatedAthlete.getImie());
-                    existingAthlete.setNazwisko(updatedAthlete.getNazwisko());
-                    existingAthlete.setNumerTelefonu(updatedAthlete.getNumerTelefonu());
-                    existingAthlete.setDataUrodzenia(updatedAthlete.getDataUrodzenia());
-                    existingAthlete.setEmail(updatedAthlete.getEmail());
-                    existingAthlete.setOplataSubskrypcyjna(updatedAthlete.getOplataSubskrypcyjna());
-                    return ResponseEntity.ok(zawodnicyRepository.save(existingAthlete));
+                    GroupResponse response = new GroupResponse(
+                            group.getNazwa(),
+                            group.getTypSportu(),
+                            participantResponses
+                    );
+                    return ResponseEntity.ok(response);
                 })
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    // DELETE an athlete
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteAthlete(@PathVariable Integer id) {
-        return zawodnicyRepository.findById(id)
-                .map(athlete -> {
-                    zawodnicyRepository.delete(athlete);
-                    return ResponseEntity.ok().build();
-                })
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    // DTOs for API responses
+    public static class GroupResponse {
+        private String nazwa;
+        private String typSportu;
+        private List<ParticipantResponse> participants;
+
+        public GroupResponse(String nazwa, String typSportu, List<ParticipantResponse> participants) {
+            this.nazwa = nazwa;
+            this.typSportu = typSportu;
+            this.participants = participants;
+        }
+
+        public String getNazwa() {
+            return nazwa;
+        }
+
+        public void setNazwa(String nazwa) {
+            this.nazwa = nazwa;
+        }
+
+        public String getTypSportu() {
+            return typSportu;
+        }
+
+        public void setTypSportu(String typSportu) {
+            this.typSportu = typSportu;
+        }
+
+        public List<ParticipantResponse> getParticipants() {
+            return participants;
+        }
+
+        public void setParticipants(List<ParticipantResponse> participants) {
+            this.participants = participants;
+        }
     }
+
+    public static class ParticipantResponse {
+        private String name;
+        private String dataPrzypisania;
+
+        public ParticipantResponse(String name, Instant dataPrzypisania) {
+            this.name = name;
+            this.dataPrzypisania = dataPrzypisania.toString(); // Convert Instant to String
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getDataPrzypisania() {
+            return dataPrzypisania;
+        }
+
+        public void setDataPrzypisania(String dataPrzypisania) {
+            this.dataPrzypisania = dataPrzypisania;
+        }
+    }
+
 }

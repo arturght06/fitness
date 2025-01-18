@@ -11,6 +11,10 @@ public class Pracownicy {
     @Column(name = "pracownik_id", nullable = false)
     private Integer id;
 
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
+    private User user;
+
     @Column(name = "imie", nullable = false, length = 20)
     private String imie;
 
@@ -129,6 +133,14 @@ public class Pracownicy {
 
     public void setAdres(Adresy adres) {
         this.adres = adres;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }

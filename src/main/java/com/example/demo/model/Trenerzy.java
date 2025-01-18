@@ -1,9 +1,6 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "\"Trenerzy\"")
@@ -11,6 +8,10 @@ public class Trenerzy {
     @Id
     @Column(name = "pracownik_id", nullable = false)
     private Integer id;
+
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
+    private User user;
 
     @Column(name = "typ_sportu", nullable = false, length = 15)
     private String typSportu;
@@ -51,6 +52,14 @@ public class Trenerzy {
 
     public void setNrLicencji(String nrLicencji) {
         this.nrLicencji = nrLicencji;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }
