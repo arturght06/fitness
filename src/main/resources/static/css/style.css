@@ -1,7 +1,22 @@
 /* Custom CSS for Klub Lekkoatletyczny */
 body {
-    font-family: Arial, sans-serif;
+    /*font-family: Arial, sans-serif;*/
     background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Full viewport height */
+}
+
+main {
+    flex-grow: 1; /* Allow the main content to take up available space */
+}
+
+footer {
+    background-color: #343a40;
+    color: #adb5bd;
+    margin-top: auto; /* Push footer to the bottom */
+    padding: 1rem 0;
+    text-align: center;
 }
 
 header {
