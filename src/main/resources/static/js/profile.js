@@ -24,6 +24,29 @@ function restoreActiveLink() {
 });
 }
 }
+function toggleRoleForms() {
+    const role = document.getElementById('role').value;
+    const zawodnikFields = document.getElementById('zawodnikFields');
+    const trenerFields = document.getElementById('trenerFields');
+
+    if (role === "ZAWODNIK") {
+        zawodnikFields.style.display = 'block';
+        trenerFields.style.display = 'none';
+    } else if (role === "TRENER") {
+        trenerFields.style.display = 'block';
+        zawodnikFields.style.display = 'none';
+    } else {
+        zawodnikFields.style.display = 'none';
+        trenerFields.style.display = 'none';
+    }
+}
+
+
+function toggleAdresFields() {
+    const adresFields = document.getElementById("adresFields");
+    adresFields.style.display = adresFields.style.display === "none" ? "block" : "none";
+}
+
 
 
 (function () { 'use strict'
@@ -41,5 +64,11 @@ function restoreActiveLink() {
 })
 })()
 
+
+// Show the error message if a pending request exists
+function showErrorMessage() {
+    const errorMessageContainer = document.getElementById("error-message-container");
+    errorMessageContainer.style.display = "block";
+}
 
 document.addEventListener('DOMContentLoaded', restoreActiveLink);

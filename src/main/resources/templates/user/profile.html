@@ -43,11 +43,9 @@
 
         <!-- Role Upgrade Section -->
         <div id="roleUpgrade" class="section" style="display: none;" th:if="${user.role != 'ADMIN'}">
-            <!-- Wyświetlanie komunikatu o błędzie -->
-            <div class="container mt-3" th:if="${param.error == 'PendingRequest'}">
-                <div class="alert alert-danger" role="alert">
-                    Masz już oczekującą prośbę o zmianę roli. Proszę poczekać, aż zostanie przetworzona, zanim wyślesz nową.
-                </div>
+            <!-- Error message -->
+            <div th:if="${error}" class="alert alert-danger mt-3">
+                <span th:text="${error}"></span>
             </div>
 
             <div class="card shadow-sm">
@@ -55,9 +53,9 @@
                     <h2>Role Upgrade</h2>
                 </div>
                 <div class="card-body">
-                    <form th:action="@{/upgrade-role}" method="post" class="needs-validation" novalidate>
+                    <form th:action="@{/profile/role-requests}" method="post" class="needs-validation" novalidate>
                         <label for="role" class="form-label">Request Role Upgrade:</label>
-                        <select id="role" name="newRole" class="form-select" required>
+                        <select id="role" name="requestedRole" class="form-select" onchange="toggleRoleForms()" required>
                             <option value="" disabled selected>Select a role...</option>
                             <option value="ZAWODNIK">Zawodnik Klubu</option>
                             <option value="TRENER">Trener</option>
@@ -66,9 +64,102 @@
                         <div class="invalid-feedback">
                             Proszę wybrać rolę przed wysłaniem zgłoszenia!
                         </div>
+
+                        <!-- Общие поля для ZAWODNIK и TRENER -->
+                        <div class="mb-3">
+                            <label for="imie" class="form-label">Imię:</label>
+                            <input type="text" id="imie" name="imie" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="nazwisko" class="form-label">Nazwisko:</label>
+                            <input type="text" id="nazwisko" name="nazwisko" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="numerTelefonu" class="form-label">Numer Telefonu:</label>
+                            <input type="text" id="numerTelefonu" name="numerTelefonu" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" id="email" name="email" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="dataUrodzenia" class="form-label">Data Urodzenia:</label>
+                            <input type="date" id="dataUrodzenia" name="dataUrodzenia" class="form-control">
+                        </div>
+
+                        <!-- Additional Fields for ZAWODNIK -->
+                        <div id="zawodnikFields" style="display: none; margin-top: 20px;">
+<!--                            <h4>Additional Information for Zawodnik</h4>-->
+
+                        </div>
+
+                        <!-- Additional Fields for TRENER -->
+                        <div id="trenerFields" style="display: none; margin-top: 20px;">
+                            <h4>Additional Information for Trener</h4>
+                            <div class="mb-3">
+                                <label for="telefon" class="form-label">Telefon:</label>
+                                <input type="text" id="telefon" name="telefon" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="pesel" class="form-label">PESEL:</label>
+                                <input type="text" id="pesel" name="pesel" class="form-control">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="dataZatrudnienia" class="form-label">Data Zatrudnienia:</label>
+                                <input type="date" id="dataZatrudnienia" name="dataZatrudnienia" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="typSportu" class="form-label">Typ Sportu:</label>
+                                <input type="text" id="typSportu" name="typSportu" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <label for="doswiadczenie" class="form-label">Doświadczenie:</label>
+                                <textarea id="doswiadczenie" name="doswiadczenie" class="form-control" rows="3"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nrLicencji" class="form-label">Numer Licencji:</label>
+                                <input type="text" id="nrLicencji" name="nrLicencji" class="form-control">
+                            </div>
+
+                            <!-- Collapsible Adres Fields -->
+                            <h4 class="mt-4">
+                                Adres
+                                <button type="button" class="btn btn-link" onclick="toggleAdresFields()">Pokaż/Skróć</button>
+                            </h4>
+                            <div id="adresFields" style="display: none; margin-top: 10px;">
+                                <div class="mb-3">
+                                    <label for="miasto" class="form-label">Miasto:</label>
+                                    <input type="text" id="miasto" name="miasto" class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="kraj" class="form-label">Kraj:</label>
+                                    <input type="text" id="kraj" name="kraj" class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="kodPocztowy" class="form-label">Kod Pocztowy:</label>
+                                    <input type="text" id="kodPocztowy" name="kodPocztowy" class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="nazwaUlicy" class="form-label">Nazwa Ulicy:</label>
+                                    <input type="text" id="nazwaUlicy" name="nazwaUlicy" class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="nrDomu" class="form-label">Numer Domu:</label>
+                                    <input type="text" id="nrDomu" name="nrDomu" class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="nrLokalu" class="form-label">Numer Lokalu (opcjonalnie):</label>
+                                    <input type="text" id="nrLokalu" name="nrLokalu" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
                         <button type="submit" class="btn btn-primary w-100 mt-3">Submit Request</button>
                     </form>
-
                 </div>
             </div>
         </div>

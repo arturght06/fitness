@@ -1,14 +1,12 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "\"Adresy\"")
 public class Adresy {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "adres_id", nullable = false)
     private Integer id;
 
